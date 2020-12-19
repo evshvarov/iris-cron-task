@@ -5,7 +5,7 @@ Class dc.cron.task
 /// * * * * * - run every minute
 /// 0 * * * * - run every hour
 /// 0 0 * * * - run every day at midnight
-ClassMethod Code(cron, runcode, runnow = 1, ByRef tid) As %Status
+ClassMethod Start(cron, runcode, runnow = 1, ByRef tid) As %Status
 {
         set sc = $$$OK
         Set task=##class(%SYS.Task).%New()
@@ -45,6 +45,12 @@ ClassMethod Code(cron, runcode, runnow = 1, ByRef tid) As %Status
         if runnow set sc=##class(%SYS.Task).RunNow(task.%Id())
         set tid=task.%Id()
         return sc
+}
+
+ClassMethod Kill(tid As %Integer) As %Status
+{
+    
+    return ##class(%SYS.Task).%DeleteId(tid)
 }
 
 }

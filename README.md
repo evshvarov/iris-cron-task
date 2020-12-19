@@ -40,8 +40,12 @@ USER>
 ````
 Run "set ^A($I(^A))=$H" every minute:
 ```
-USER>zw ##class(dc.cron.task).Code("* * * * *","s ^A($I(^A))=$H",1,.task)
+USER>zw ##class(dc.cron.task).Start("* * * * *","s ^A($I(^A))=$H",1,.taskId)
 ```
+taskId contains the id of the task created:
+UZER>w taskId
+1000
+
 It will store in a global ^A the something like the following:
 USER>zw ^A
 ^A=6
@@ -55,16 +59,23 @@ USER>zw ^A
 
 Run "set ^B($I(^B))=$H" every hour:
 ```
-USER>zw ##class(dc.cron.task).Code("0 * * * *","s ^B($I(^B))=$H",1,.task)
+USER>zw ##class(dc.cron.task).Start("0 * * * *","s ^B($I(^B))=$H",1,.taskId)
 ```
 Run "set ^A($I(^A))=$H" every day at midnight:
 ```
-USER>zw ##class(dc.cron.task).Code("0 0 * * *","s ^C($I(^C))=$H",1,.task)
+USER>zw ##class(dc.cron.task).Start("0 0 * * *","s ^C($I(^C))=$H",1,.taskId)
 ```
 
+And you can delete the task when you don't need it anymore.
+
+USER>zw ##class(dc.cron.task).Kill(taskId)
 
 
-## How to start coding
+## Collaboration
+You are very welcome to collaborate and make changes.
+Fork the repository and send Pull Request.
+
+Below I describe how to make changes in ObjectScript part:
 ## Prerequisites
 Make sure you have [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and [Docker desktop](https://www.docker.com/products/docker-desktop) installed.
 
