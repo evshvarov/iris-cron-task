@@ -1,11 +1,16 @@
-## intersystems-objectscript-template
-This is a template for InterSystems ObjectScript Github repository.
-The template goes also with a few files which let you immedietly compile your ObjecScript files in InterSystems IRIS Community Edition in a docker container
-
-## Prerequisites
-Make sure you have [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and [Docker desktop](https://www.docker.com/products/docker-desktop) installed.
-
+## iris-cron-task
+Class to setup tasks running at schedule
 ## Installation 
+
+### Installation with ZPM
+
+USER>zpm "install iris-cron-task"
+
+### Installaton with importing class
+
+Import [the class](https://github.com/evshvarov/iris-cron-task/blob/master/src%2Fdc%2Fcron%2Ftask.cls) into your system. 
+
+### testing with docker and collaboration
 
 Clone/git pull the repo into any local directory
 
@@ -31,9 +36,38 @@ Open IRIS terminal:
 
 ```
 $ docker-compose exec iris iris session iris
-USER>write ##class(dc.PackageSample.ObjectScript).Test()
+USER>
+````
+Run "set ^A($I(^A))=$H" every minute:
 ```
+USER>zw ##class(dc.cron.task).Code("* * * * *","s ^A($I(^A))=$H",1,.task)
+```
+It will store in a global ^A the something like the following:
+USER>zw ^A
+^A=6
+^A(1)="65732,54180"
+^A(2)="65732,54240"
+^A(3)="65732,54300"
+^A(4)="65732,54360"
+^A(5)="65732,54420"
+^A(6)="65732,54480"
+
+
+Run "set ^B($I(^B))=$H" every hour:
+```
+USER>zw ##class(dc.cron.task).Code("0 * * * *","s ^B($I(^B))=$H",1,.task)
+```
+Run "set ^A($I(^A))=$H" every day at midnight:
+```
+USER>zw ##class(dc.cron.task).Code("0 0 * * *","s ^C($I(^C))=$H",1,.task)
+```
+
+
+
 ## How to start coding
+## Prerequisites
+Make sure you have [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and [Docker desktop](https://www.docker.com/products/docker-desktop) installed.
+
 This repository is ready to code in VSCode with ObjectScript plugin.
 Install [VSCode](https://code.visualstudio.com/), [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) and [ObjectScript](https://marketplace.visualstudio.com/items?itemName=daimor.vscode-objectscript) plugin and open the folder in VSCode.
 Open /src/cls/PackageSample/ObjectScript.cls class and try to make changes - it will be compiled in running IRIS docker container.
