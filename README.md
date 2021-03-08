@@ -70,6 +70,14 @@ And you can delete the task when you don't need it anymore.
 
 USER>zw ##class(dc.cron.task).Kill(taskId)
 
+## CronMaker syntax
+
+[CronMaker](http://www.cronmaker.com) syntax is also supported by using `StartByCronMakerExpression` method.  
+Example, run every Monday and Tuesday at 2:00 pm :  
+```
+Set sc = ##class(dc.cron.task).StartByCronMakerExpression("The Task Name","0 0 14 ? * MON,TUE *","set ^A($I(^A))=$H",,.tid)
+```
+
 
 ## Collaboration
 You are very welcome to collaborate and make changes.
