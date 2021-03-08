@@ -3,11 +3,12 @@
   <Document name="iris-cron-task.ZPM">
     <Module>
       <Name>iris-cron-task</Name>
-      <Version>1.0.2</Version>
+      <Version>1.1.0</Version>
       <Description>Class to setup tasks running at schedule</Description>
       <Packaging>module</Packaging>
       <SourcesRoot>src</SourcesRoot>
       <Resource Name="dc.cron.PKG"/>
+      <UnitTest Name="/tests" Package="UnitTest.dc.cron" Phase="test"/>
     </Module>
   </Document>
 </Export>

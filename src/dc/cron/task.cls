@@ -47,6 +47,14 @@ ClassMethod Start(cron, runcode, runnow = 1, ByRef tid) As %Status
         return sc
 }
 
+/// Cron expression maker : http://www.cronmaker.com
+/// 0 0/15 * 1/1 * ? * - every 15 minutes
+/// 0 0 0/3 1/1 * ? * - every 3 hours
+/// 0 0 14 1/1 * ? * - every day at 2:00PM
+/// 0 0 14 ? * MON,TUE * - every Monday and Tuesday at 2:00PM
+/// 0 0 14 31 1/1 ? * - every last day of month at 2:00PM
+/// 0 0 14 31 1/2 ? * - every Last day of every 2 months at 2:00PM
+/// 0 0 14 ? 1/2 FRI#3 * - every third friday at 2:00PM every 2 months
 ClassMethod StartByCronMakerExpression(name As %String, cronMakerExpression As %String, runcode As %String, runnow = 1, ByRef tid) As %Status
 {
     Set sc = $$$OK
@@ -88,7 +96,7 @@ ClassMethod ProcessCronMakerExpression(cronMakerExpression As %String, ByRef tas
     Set taskProperties("TimePeriodEvery")=1 // Every 1 day
     Set taskProperties("DailyStartTime") = 0 // Start at 00:00:00
     Set taskProperties("DailyEndTime") = 86399 // End at 23:59:59
-    Set taskProperties("DailyFrequency")="" ;1 // Run Several times in a day
+    Set taskProperties("DailyFrequency")=0 ;1 // Run Several times in a day
     Set taskProperties("StartDate") = $p($H,",",1) // Start today
 
     Set lstD=$Lb("SUN","MON","TUE","WED","THU","FRI","SUN")
