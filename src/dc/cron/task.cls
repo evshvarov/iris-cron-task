@@ -3,6 +3,8 @@ Class dc.cron.task
 
 /// name - name of the task
 /// cron expression for schedule
+/// runcode - a string with ObjectScript you want to be executed - it will be xecuted
+/// tid - the taskid to be returned. You need it e.g. to suspend/resume or kill the task
 
 ClassMethod Start(name, cron, runcode, runnow = 1, ByRef tid) As %Status
 {
