@@ -1,11 +1,21 @@
 Class dc.cron.task
 {
 
+/// name - name of the task
 /// cron expression for schedule
+
+ClassMethod Start(name, cron, runcode, runnow = 1, ByRef tid) As %Status
+{
+    set sc = $$$OK
+    set sc = ..StartByCronMakerExpression($g(name,"iris-cron-task"),cron,runcode,$g(runnow,1),.tid )
+    return sc
+}
+
 /// * * * * * - run every minute
 /// 0 * * * * - run every hour
 /// 0 0 * * * - run every day at midnight
-ClassMethod Start(cron, runcode, runnow = 1, ByRef tid) As %Status
+
+ClassMethod StartOld(cron, runcode, runnow = 1, ByRef tid) As %Status
 {
         set sc = $$$OK
         Set task=##class(%SYS.Task).%New()

@@ -1,6 +1,7 @@
 ## iris-cron-task
-Class to setup tasks running at schedule
-## Installation 
+Class to setup tasks running at schedule with cron expression.
+The cron expression could be taken from [cronmaker site](http://www.cronmaker.com/)
+Thanks to [Lorenzo's Skaleze](https://github.com/lscalese) PR this works with any cron expression.
 
 ### Installation with ZPM
 
@@ -30,7 +31,7 @@ $ docker-compose build
 $ docker-compose up -d
 ```
 
-## How to Test it
+## Usage
 
 Open IRIS terminal:
 
@@ -40,7 +41,7 @@ USER>
 ````
 Run "set ^A($I(^A))=$H" every minute:
 ```
-USER>zw ##class(dc.cron.task).Start("* * * * *","s ^A($I(^A))=$H",1,.taskId)
+USER>zw ##class(dc.cron.task).Start("IRIS cron task name","* * * * *","s ^A($I(^A))=$H",1,.taskId)
 ```
 taskId contains the id of the task created:
 UZER>w taskId
@@ -59,11 +60,11 @@ USER>zw ^A
 
 Run "set ^B($I(^B))=$H" every hour:
 ```
-USER>zw ##class(dc.cron.task).Start("0 * * * *","s ^B($I(^B))=$H",1,.taskId)
+USER>zw ##class(dc.cron.task).Start("IRIS cron task name","0 * * * *","s ^B($I(^B))=$H",1,.taskId)
 ```
 Run "set ^A($I(^A))=$H" every day at midnight:
 ```
-USER>zw ##class(dc.cron.task).Start("0 0 * * *","s ^C($I(^C))=$H",1,.taskId)
+USER>zw ##class(dc.cron.task).Start("IRIS cron task name","0 0 * * *","s ^C($I(^C))=$H",1,.taskId)
 ```
 
 And you can delete the task when you don't need it anymore.
@@ -78,6 +79,11 @@ Example, run every Monday and Tuesday at 2:00 pm :
 Set sc = ##class(dc.cron.task).StartByCronMakerExpression("The Task Name","0 0 14 ? * MON,TUE *","set ^A($I(^A))=$H",,.tid)
 ```
 
+or you can call method Start because it uses StartByCronMakerExpression inside now.
+
+```
+Set sc = ##class(dc.cron.task).Start("The Task Name","0 0 14 ? * MON,TUE *","set ^A($I(^A))=$H",,.tid)
+```
 
 ## Collaboration
 You are very welcome to collaborate and make changes.
