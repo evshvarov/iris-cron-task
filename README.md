@@ -44,7 +44,7 @@ Run "set ^A($I(^A))=$H" every minute:
 USER>zw ##class(dc.cron.task).Start("IRIS cron task name","* * * * *","s ^A($I(^A))=$H",1,.taskId)
 ```
 taskId contains the id of the task created:
-UZER>w taskId
+USER>w taskId
 1000
 
 It will store in a global ^A the something like the following:
