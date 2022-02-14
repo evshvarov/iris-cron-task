@@ -16,7 +16,7 @@ Import [the class](https://github.com/evshvarov/iris-cron-task/blob/master/src%2
 Clone/git pull the repo into any local directory
 
 ```
-$ git clone https://github.com/intersystems-community/objectscript-docker-template.git
+$ git clone https://github.com/evshvarov/iris-cron-task.git
 ```
 
 Open the terminal in this directory and run:
