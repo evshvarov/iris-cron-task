@@ -1,4 +1,5 @@
 ## iris-cron-task
+[![Quality Gate Status](https://community.objectscriptquality.com/api/project_badges/measure?project=intersystems_iris_community%2Firis-cron-task&metric=alert_status)](https://community.objectscriptquality.com/dashboard?id=intersystems_iris_community%2Firis-cron-task) 
 Class to setup tasks running at schedule with cron expression.
 The cron expression could be taken from [cronmaker site](http://www.cronmaker.com/)
 Thanks to [Lorenzo's Skaleze](https://github.com/lscalese) PR this works with any cron expression.
