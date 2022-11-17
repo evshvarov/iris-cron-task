@@ -37,19 +37,24 @@ $ docker-compose up -d
 
 Open IRIS terminal:
 
-```
+```sh
 $ docker-compose exec iris iris session iris
 USER>
-````
-Run "set ^A($I(^A))=$H" every minute:
+```
+
+Run `"set ^A($I(^A))=$H"` every minute:
 ```
 USER>zw ##class(dc.cron.task).Start("IRIS cron task name","* * * * *","s ^A($I(^A))=$H",1,.taskId)
 ```
+
 taskId contains the id of the task created:
+```
 USER>w taskId
 1000
+```
 
 It will store in a global ^A the something like the following:
+```
 USER>zw ^A
 ^A=6
 ^A(1)="65732,54180"
@@ -58,20 +63,49 @@ USER>zw ^A
 ^A(4)="65732,54360"
 ^A(5)="65732,54420"
 ^A(6)="65732,54480"
+```
 
+Run `"set ^B($I(^B))=$H"` every hour:
 
-Run "set ^B($I(^B))=$H" every hour:
 ```
 USER>zw ##class(dc.cron.task).Start("IRIS cron task name","0 * * * *","s ^B($I(^B))=$H",1,.taskId)
 ```
-Run "set ^A($I(^A))=$H" every day at midnight:
+
+Run `"set ^A($I(^A))=$H"` every day at midnight:
 ```
 USER>zw ##class(dc.cron.task).Start("IRIS cron task name","0 0 * * *","s ^C($I(^C))=$H",1,.taskId)
 ```
 
 And you can delete the task when you don't need it anymore.
 
+```
 USER>zw ##class(dc.cron.task).Kill(taskId)
+```
+
+## Usage with python
+
+You can use the python script to start the task from the command line.
+
+```python
+from iris_cron import Task
+
+if __name__ == '__main__':
+    # in objectscript
+    tid = Task.create_objectscript_task('test', '0 0 1 * * *','set ^test($h) = "test"', run_now=True)
+    print(tid)
+    # in python
+    task = """
+import time
+import iris
+gref = iris.gref('testpython')
+gref['time'] = time.time()
+"""
+    tid = Task.create_python_task('test', '0 0 1 * *', task, run_now=True)
+    print(tid)
+    # get tasks
+    tasks = Task.get_tasks()
+    print(tasks)
+```
 
 ## CronMaker syntax
 
