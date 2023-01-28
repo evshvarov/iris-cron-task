@@ -111,7 +111,7 @@ ClassMethod ProcessCronMakerExpression(cronMakerExpression As %String, ByRef tas
     Set taskProperties("DailyFrequency")=0 ;1 // Run Several times in a day
     Set taskProperties("StartDate") = $p($H,",",1) // Start today
 
-    Set lstD=$Lb("SUN","MON","TUE","WED","THU","FRI","SUN")
+    Set lstD=$Lb("SUN","MON","TUE","WED","THU","FRI","SAT")
     
 
     If min '= "*" {
