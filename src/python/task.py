@@ -55,7 +55,7 @@ class Task(object):
         # get byref
         tid = iris.ref(0)
 
-        command = f'##class(%SYS.Python).Run("{command}")'
+        command = f'w ##class(%SYS.Python).Run("{command}")'
 
         cls.raise_on_error(iris.cls('dc.cron.task').Start(name, schedule, command, run_now, tid))
 
