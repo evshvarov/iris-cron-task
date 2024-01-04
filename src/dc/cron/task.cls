@@ -151,7 +151,9 @@ ClassMethod ProcessCronMakerExpression(cronMakerExpression As %String, ByRef tas
         }
 
     }
-
+    else {
+	    Set taskProperties("DailyStartTime")=$p($H,",",2)+1
+    }
     If month = "*" {
         
         If dom = "?" { 
