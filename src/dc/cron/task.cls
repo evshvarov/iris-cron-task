@@ -5,7 +5,6 @@ Class dc.cron.task
 /// cron expression for schedule
 /// runcode - a string with ObjectScript you want to be executed - it will be xecuted
 /// tid - the taskid to be returned. You need it e.g. to suspend/resume or kill the task
-
 ClassMethod Start(name, cron, runcode, runnow = 1, ByRef tid) As %Status
 {
     set sc = $$$OK
@@ -16,7 +15,6 @@ ClassMethod Start(name, cron, runcode, runnow = 1, ByRef tid) As %Status
 /// * * * * * - run every minute
 /// 0 * * * * - run every hour
 /// 0 0 * * * - run every day at midnight
-
 ClassMethod StartOld(cron, runcode, runnow = 1, ByRef tid) As %Status
 {
         set sc = $$$OK
@@ -82,7 +80,9 @@ ClassMethod StartByCronMakerExpression(name As %String, cronMakerExpression As %
         Quit:key=""
         Set $PROPERTY(task,key) = keyValue
     }
-
+	zw properties
+	zw task
+	
     Set taskdef = ##class(%SYS.Task.RunLegacyTask).%New()
     Set task.TaskClass=$classname(taskdef)
     set taskdef.ExecuteCode=runcode
@@ -122,7 +122,9 @@ ClassMethod ProcessCronMakerExpression(cronMakerExpression As %String, ByRef tas
             Set taskProperties("DailyFrequency")=1
         }
     }
-
+    else {
+	    Set taskProperties("StartDate") = $p($H,",",1)+1
+    }
     If hours '= "*" {
         Set everyXHours = $Piece(hours,"/",2)
         If everyXHours '= "" {
@@ -152,8 +154,9 @@ ClassMethod ProcessCronMakerExpression(cronMakerExpression As %String, ByRef tas
 
     }
     else {
-	    Set taskProperties("DailyStartTime")=$p($H,",",2)+1
+	    Set taskProperties("StartDate") = $p($H,",",1)+1
     }
+
     If month = "*" {
         
         If dom = "?" { 
@@ -186,8 +189,8 @@ ClassMethod ProcessCronMakerExpression(cronMakerExpression As %String, ByRef tas
             Set taskProperties("TimePeriodDay") = $Piece(dow,"#",2)_"^"_$LISTFIND(lstD,$Piece(dow,"#",1))
         }
     }
-
-    Quit $$$OK
+	
+	Quit $$$OK
 }
 
 ClassMethod Kill(tid As %Integer) As %Status
