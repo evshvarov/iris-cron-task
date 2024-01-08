@@ -80,8 +80,6 @@ ClassMethod StartByCronMakerExpression(name As %String, cronMakerExpression As %
         Quit:key=""
         Set $PROPERTY(task,key) = keyValue
     }
-	zw properties
-	zw task
 	
     Set taskdef = ##class(%SYS.Task.RunLegacyTask).%New()
     Set task.TaskClass=$classname(taskdef)
